@@ -1,0 +1,156 @@
+@include('layout.header')
+@include('layout.navbar')
+@include('layout.sidebar')
+  <!-- START FORM -->
+<div class="content-wrapper">
+    <form action='{{url('products')}}' method='post'>
+        @csrf
+        <div class="my-3 p-3 bg-body rounded shadow-sm">
+            <a href="{{url('products')}}" class="btn btn-secondary">Kembali</a>
+            <div class="mb-3 row">
+                <label for="name" class="col-sm-2 col-form-label">Nama</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name='name' value="{{Session::get('name')}}" id="name">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="description" class="col-sm-2 col-form-label">Deskripsi</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" name='description' value="{{Session::get('description')}}" id="description">
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="category_id" class="col-sm-2 col-form-label">Kategori</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchCategory" placeholder="Cari atau Pilih Kategori">
+                        <select class="form-control" name="category_id" id="category_id">
+                            <option value="">Pilih Kategori</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3 row">
+                <label for="type_id" class="col-sm-2 col-form-label">Tipe Obat</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchType" placeholder="Cari atau Pilih Tipe Obat">
+                        <select class="form-control" name="type_id" id="type_id">
+                            <option value="">Pilih Tipe Obat</option>
+                            @foreach ($types as $type)
+                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>                    
+            <div class="mb-3 row">
+                <label for="supplier_id" class="col-sm-2 col-form-label">Supplier</label>
+                <div class="col-sm-10">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="searchType" placeholder="Cari atau Pilih Supplier">
+                        <select class="form-control" name="supplier_id" id="supplier_id">
+                            <option value="">Pilih Supplier</option>
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}">{{ $supplier->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </div>
+            </div>                    
+            <div class="mb-3 row">
+                <label for="product" class="col-sm-2 col-form-label"></label>
+                <div class="col-sm-10"><button type="submit" class="btn btn-primary" name="submit">SIMPAN</button></div>
+            </div>
+        </div>
+    </form>
+    <!-- AKHIR FORM -->  
+</div>
+<script>
+    document.getElementById('searchCategory').addEventListener('input', function() {
+        var input, filter, options, select, option, i;
+        input = document.getElementById('searchCategory');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('category_id');
+        options = select.getElementsByTagName('option');
+
+        select.setAttribute('size', '5'); // Ubah jumlah opsi yang ditampilkan
+        select.style.display = 'block';
+
+        for (i = 0; i < options.length; i++) {
+            option = options[i];
+            if (option.text.toUpperCase().indexOf(filter) > -1) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        }
+    });
+
+    document.getElementById('category_id').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var input = document.getElementById('searchCategory');
+        input.value = selectedOption.text;
+    });
+
+    document.getElementById('searchType').addEventListener('input', function() {
+        var input, filter, options, select, option, i;
+        input = document.getElementById('searchType');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('type_id');
+        options = select.getElementsByTagName('option');
+
+        select.setAttribute('size', '5'); // Ubah jumlah opsi yang ditampilkan
+        select.style.display = 'block';
+
+        for (i = 0; i < options.length; i++) {
+            option = options[i];
+            if (option.text.toUpperCase().indexOf(filter) > -1) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        }
+    });
+
+    document.getElementById('type_id').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var input = document.getElementById('searchType');
+        input.value = selectedOption.text;
+    });
+
+    document.getElementById('searchsupplier').addEventListener('input', function() {
+        var input, filter, options, select, option, i;
+        input = document.getElementById('searchsupplier');
+        filter = input.value.toUpperCase();
+        select = document.getElementById('supplier_id');
+        options = select.getElementsByTagName('option');
+
+        select.setAttribute('size', '5'); // Ubah jumlah opsi yang ditampilkan
+        select.style.display = 'block';
+
+        for (i = 0; i < options.length; i++) {
+            option = options[i];
+            if (option.text.toUpperCase().indexOf(filter) > -1) {
+                option.style.display = '';
+            } else {
+                option.style.display = 'none';
+            }
+        }
+    });
+
+    document.getElementById('supplier_id').addEventListener('change', function() {
+        var selectedOption = this.options[this.selectedIndex];
+        var input = document.getElementById('searchsupplier');
+        input.value = selectedOption.text;
+    });
+</script>
+
+
+@include('layout.footer')
+
+
+
